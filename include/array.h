@@ -1,8 +1,17 @@
 #pragma once
 
+#ifdef _MSC_VER
+#define RESTRICT __restrict
+#elif defined(__GNUC__) || defined(__clang__)
+#define RESTRICT __restrict__
+#else
+#define RESTRICT
+#endif
+
 #include <assert.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 //--------------------------------------
 
@@ -16,7 +25,7 @@ template<typename T>
 struct slice1d
 {
     int size;
-    T* __restrict__ data;
+    T* RESTRICT data;
     
     slice1d(int _size, T* _data) : size(_size), data(_data) {}
     
@@ -31,7 +40,7 @@ template<typename T>
 struct slice2d
 {
     int rows, cols;
-    T* __restrict__ data;
+    T*  RESTRICT data;
     
     slice2d(int _rows, int _cols, T* _data) : rows(_rows), cols(_cols), data(_data) {}
 
